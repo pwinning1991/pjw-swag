@@ -1,0 +1,8 @@
+github.com/gorilla/schema v1.4.1 h1:jUg5hUjCSDZpNGLuXQOgIWGdlgrIdYvgQ0wZtdK1M3E=
+github.com/gorilla/schema v1.4.1/go.mod h1:Dg5SSm5PV60mhF2NFaTV1xuYYj8tV8NOPRo4FggUMnM=
+github.com/joncalhoun/twg v0.0.0-20220613001503-30243010d265 h1:UZMu/ugHgIeAztzBGMc7HH1yEn/3GWtdy0MXnImkCdk=
+github.com/joncalhoun/twg v0.0.0-20220613001503-30243010d265/go.mod h1:BVfVloOrhEBUfwkOOhDpifSpAKEzZbLGykcKwHXnpAg=
+github.com/lib/pq v1.10.9 h1:YXG7RB+JIjhP29X+OtkiDnYaXQwpS4JEWq7dtCCRUEw=
+github.com/lib/pq v1.10.9/go.mod h1:AlVN5x4E4T544tWzH6hKfbfQvm3HdbOxrmggDNAPY9o=
+github.com/pwinning1991/stripe v0.0.0-20240906233423-bb01dab83eda h1:otBSMBBVbv2y50v1zFLdmSY7rPgJDaAlUm9o3m364hU=
+github.com/pwinning1991/stripe v0.0.0-20240906233423-bb01dab83eda/go.mod h1:U15npEoSxXlprA4VPcnFZyLE+3cAhm9Xrhz2tJ+CVkU=
