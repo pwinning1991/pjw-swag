@@ -6,3 +6,5 @@ github.com/lib/pq v1.10.9 h1:YXG7RB+JIjhP29X+OtkiDnYaXQwpS4JEWq7dtCCRUEw=
 github.com/lib/pq v1.10.9/go.mod h1:AlVN5x4E4T544tWzH6hKfbfQvm3HdbOxrmggDNAPY9o=
 github.com/pwinning1991/stripe v0.0.0-20240906233423-bb01dab83eda h1:otBSMBBVbv2y50v1zFLdmSY7rPgJDaAlUm9o3m364hU=
 github.com/pwinning1991/stripe v0.0.0-20240906233423-bb01dab83eda/go.mod h1:U15npEoSxXlprA4VPcnFZyLE+3cAhm9Xrhz2tJ+CVkU=
+github.com/pwinning1991/stripe v0.0.0-20240913144900-feb3e5e7a3d3 h1:2/nrknVg/I6XihmHStpZBAFGWIC3Qqj4nTZKQSMDHno=
+github.com/pwinning1991/stripe v0.0.0-20240913144900-feb3e5e7a3d3/go.mod h1:U15npEoSxXlprA4VPcnFZyLE+3cAhm9Xrhz2tJ+CVkU=
