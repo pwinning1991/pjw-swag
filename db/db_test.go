@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/joncalhoun/twg/swag/db"
+	"github.com/pwinning1991/pjw-swag/db"
 )
 
 const defaultURL = "postgres://postgres@127.0.0.1:5432/swag_test?sslmode=disable"
