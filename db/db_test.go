@@ -34,7 +34,7 @@ func TestCreateCampaign(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer
+	defer database.Close()
 	tests := map[string]*db.Campaign{
 		"active": &db.Campaign{
 			StartsAt: time.Now(),
