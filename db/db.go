@@ -56,21 +56,7 @@ type Database struct {
 }
 
 func CreateCampaign(start, end time.Time, price int) (*Campaign, error) {
-	statement := `
-	INSERT INTO campaigns(starts_at, ends_at, price)
-	VALUES($1, $2, $3)
-	RETURNING id`
-	var id int
-	err := DB.QueryRow(statement, start, end, price).Scan(&id)
-	if err != nil {
-		return nil, err
-	}
-	return &Campaign{
-		ID:       id,
-		StartsAt: start,
-		EndsAt:   end,
-		Price:    price,
-	}, nil
+	return DefaultDatabase.CreateCampaign(start, end, price)
 }
 
 func (db *Database) CreateCampaign(start, end time.Time, price int) (*Campaign, error) {
