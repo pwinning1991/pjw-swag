@@ -26,10 +26,15 @@ func init() {
 	if db.DB != nil {
 		db.DB.Close()
 	}
-	db.Open(testURL)
+	db.Init(testURL)
 }
 
 func TestCreateCampaign(t *testing.T) {
+	database, err := db.Open(testURL)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer
 	tests := map[string]*db.Campaign{
 		"active": &db.Campaign{
 			StartsAt: time.Now(),
