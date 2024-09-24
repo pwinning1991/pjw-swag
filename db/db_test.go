@@ -2,9 +2,27 @@ package db_test
 
 import (
 	"github.com/pwinning1991/pjw-swag/db"
+	"os"
 	"testing"
 	"time"
 )
+
+const defaultURL = "postgres://postgres@127.0.0.1:5432/swag_test?sslmode=disable"
+
+var (
+	testURL string
+)
+
+func init() {
+	testURL = os.Getenv("PSQL_URL")
+	if testURL == "" {
+		testURL = defaultURL
+	}
+	if db.DB != nil {
+		db.DB.Close()
+	}
+	db.Open(testURL)
+}
 
 func TestCreateCampaign(t *testing.T) {
 	var beforeCount int
