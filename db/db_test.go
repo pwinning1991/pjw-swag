@@ -1,6 +1,7 @@
 package db_test
 
 import (
+	"fmt"
 	"github.com/pwinning1991/pjw-swag/db"
 	"os"
 	"testing"
@@ -24,12 +25,41 @@ func init() {
 	db.Open(testURL)
 }
 
-func TestCreateCampaign(t *testing.T) {
-	var beforeCount int
-	err := db.DB.QueryRow("SELECT COUNT(*) FROM campaigns").Scan(&beforeCount)
+func TestCampaigns(t *testing.T) {
+	setup := reset
+	teardown := reset
+
+	t.Run("Create", func(t *testing.T) {
+		setup(t)
+		testCreateCampaign(t)
+		teardown(t)
+	})
+}
+
+func reset(t *testing.T) {
+	_, err := db.DB.Exec("DELETE FROM orders")
 	if err != nil {
-		t.Fatalf("Scan() err = %v; want nil", err)
+		t.Fatalf("setup failed: %v", err)
 	}
+
+	_, err = db.DB.Exec("DELETE FROM campaigns")
+	if err != nil {
+		t.Fatalf("setup failed: %v", err)
+	}
+
+}
+
+func count(t *testing.T, table string) int {
+	var beforeCount int
+	err := db.DB.QueryRow(fmt.Sprintf("SELECT COUNT(*) FROM %s", table)).Scan(&beforeCount)
+	if err != nil {
+		t.Fatalf("count failed: %v", err)
+	}
+	return beforeCount
+}
+
+func testCreateCampaign(t *testing.T) {
+	beforeCount := count(t, "campaigns")
 	start := time.Now()
 	end := time.Now().Add(1 * time.Hour)
 	price := 1000
@@ -43,14 +73,10 @@ func TestCreateCampaign(t *testing.T) {
 	//if !campaign.StartsAt.Equal(start) {
 	//	t.Errorf("StartsAt = %v; want %v", campaign.StartsAt, start)
 	//}
-
-	var afterCount int
-	err = db.DB.QueryRow("SELECT COUNT(*) FROM campaigns").Scan(&afterCount)
-	if err != nil {
-		t.Fatalf("Scan() err = %v; want nil", err)
-	}
-	if afterCount-beforeCount != 1 {
-		t.Fatalf("AfterCount = %d; want %d", afterCount-beforeCount, 1)
+	afterCount := count(t, "campaigns")
+	diff := afterCount - beforeCount
+	if diff != 1 {
+		t.Fatalf("AfterCount = %d; want %d", diff, 1)
 	}
 
 	got, err := db.GetCampaign(campaign.ID)
