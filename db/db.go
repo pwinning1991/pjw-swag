@@ -8,20 +8,22 @@ import (
 )
 
 var (
-	DB              *tempDB
+	DB *tempDB
+
 	DefaultDatabase = &Database{}
 )
 
 type tempDB struct{}
 
-func (t *tempDB) Exec(query string, args ...interface{}) (sql.Result, error) {
+func (tdb *tempDB) Exec(query string, args ...interface{}) (sql.Result, error) {
 	return DefaultDatabase.sqlDB.Exec(query, args...)
 }
-func (t *tempDB) QueryRow(query string, args ...interface{}) *sql.Row {
+
+func (tdb *tempDB) QueryRow(query string, args ...interface{}) *sql.Row {
 	return DefaultDatabase.sqlDB.QueryRow(query, args...)
 }
 
-func (t *tempDB) Close() error {
+func (tdb *tempDB) Close() error {
 	return DefaultDatabase.sqlDB.Close()
 }
 
@@ -33,12 +35,12 @@ func init() {
 	Open(defaultURL)
 }
 
-// Open will open a database connection using the provided postgres URL.Open
-// Be sure to close this using the db.DB.Close
+// Open will open a database connection using the provided postgres URL.
+// Be sure to close this using the db.DB.Close function.
 func Open(psqlURL string) error {
 	db, err := sql.Open("postgres", psqlURL)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	DefaultDatabase.sqlDB = db
 	return nil
@@ -79,23 +81,22 @@ func (db *Database) CreateCampaign(start, end time.Time, price int) (*Campaign, 
 
 var timeNow = time.Now
 
+func ActiveCampaign() (*Campaign, error) {
+	return DefaultDatabase.ActiveCampaign()
+}
+
 func (db *Database) ActiveCampaign() (*Campaign, error) {
 	statement := `
 	SELECT * FROM campaigns
 	WHERE starts_at <= $1
 	AND ends_at >= $1`
-	row := db.sqlDB.QueryRow(statement, timeNow)
+	row := db.sqlDB.QueryRow(statement, timeNow())
 	var camp Campaign
 	err := row.Scan(&camp.ID, &camp.StartsAt, &camp.EndsAt, &camp.Price)
 	if err != nil {
 		return nil, err
 	}
 	return &camp, nil
-
-}
-
-func ActiveCampaign() (*Campaign, error) {
-	return DefaultDatabase.ActiveCampaign()
 }
 
 func GetCampaign(id int) (*Campaign, error) {
@@ -147,7 +148,6 @@ type Order struct {
 
 func CreateOrder(order *Order) error {
 	return DefaultDatabase.CreateOrder(order)
-
 }
 
 func (db *Database) CreateOrder(order *Order) error {
